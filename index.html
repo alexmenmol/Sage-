@@ -1,1 +1,287 @@
-index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sage 💕</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e7, #fff0f6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #5a2440;
+      overflow: hidden;
+    }
+
+    .card {
+      width: 90%;
+      max-width: 430px;
+      background: white;
+      padding: 35px 25px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(150, 50, 90, 0.25);
+      animation: aparecer 0.8s ease;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 1.5;
+    }
+
+    button {
+      border: none;
+      border-radius: 15px;
+      padding: 14px 22px;
+      margin: 8px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #ff5c9a;
+      color: white;
+      box-shadow: 0 5px 12px rgba(255, 92, 154, 0.3);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .yes {
+      background: #ff4081;
+    }
+
+    .no {
+      background: #999;
+      position: relative;
+    }
+
+    .times {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .times button {
+      background: #ff79aa;
+      min-width: 90px;
+    }
+
+    .heart {
+      font-size: 55px;
+      animation: latido 1s infinite;
+    }
+
+    .message {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes latido {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PÁGINA 1 -->
+  <div class="card" id="page1">
+
+    <div class="heart">💕</div>
+
+    <h1>Sage- 💕</h1>
+
+    <p>
+      Would you like to go out with me?
+    </p>
+
+    <button class="yes" onclick="yes()">
+      Yes 💗
+    </button>
+
+    <button class="yes" onclick="yes()">
+      Absolutely yes! 💕
+    </button>
+
+    <br>
+
+    <button class="no" id="noButton" onclick="moveNo()">
+      No 😭
+    </button>
+
+  </div>
+
+
+  <!-- PÁGINA 2 -->
+  <div class="card hidden" id="page2">
+
+    <div class="heart">🥰</div>
+
+    <h1>Yay! 💕</h1>
+
+    <p>
+      Choose a time for our date 💕
+    </p>
+
+    <div class="times">
+
+      <button onclick="chooseTime('3 PM')">
+        3 PM
+      </button>
+
+      <button onclick="chooseTime('4 PM')">
+        4 PM
+      </button>
+
+      <button onclick="chooseTime('5 PM')">
+        5 PM
+      </button>
+
+      <button onclick="chooseTime('6 PM')">
+        6 PM
+      </button>
+
+      <button onclick="chooseTime('7 PM')">
+        7 PM
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- PÁGINA 3 -->
+  <div class="card hidden" id="page3">
+
+    <div class="heart">💌</div>
+
+    <h1>It's a date! 💕</h1>
+
+    <p id="selectedTime"></p>
+
+    <p class="message">
+      Thank you for saying yes 🥰💕
+    </p>
+
+    <button onclick="sendEmail()">
+      💌 Confirm by email
+    </button>
+
+  </div>
+
+
+  <script>
+
+    // TU CORREO
+    const EMAIL = "alexmendoza0351@gmail.com";
+
+    let selectedTime = "";
+
+
+    // Cuando dice SÍ
+    function yes() {
+
+      document.getElementById("page1").classList.add("hidden");
+
+      document.getElementById("page2").classList.remove("hidden");
+
+    }
+
+
+    // El botón NO se mueve
+    function moveNo() {
+
+      const button = document.getElementById("noButton");
+
+      const maxX = window.innerWidth - button.offsetWidth - 30;
+      const maxY = window.innerHeight - button.offsetHeight - 30;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      button.style.position = "fixed";
+      button.style.left = x + "px";
+      button.style.top = y + "px";
+
+    }
+
+
+    // Elegir hora
+    function chooseTime(time) {
+
+      selectedTime = time;
+
+      document.getElementById("page2").classList.add("hidden");
+
+      document.getElementById("page3").classList.remove("hidden");
+
+      document.getElementById("selectedTime").innerHTML =
+        "Our date will be at <strong>" + time + "</strong> 💕";
+
+    }
+
+
+    // Abrir correo
+    function sendEmail() {
+
+      const subject = encodeURIComponent(
+        "💕 Confirmación de nuestra cita"
+      );
+
+      const body = encodeURIComponent(
+        "¡Sí! 💕\n\n" +
+        "Elegí la hora: " + selectedTime + "\n\n" +
+        "Nos vemos 🥰💕"
+      );
+
+      window.location.href =
+        "mailto:" +
+        EMAIL +
+        "?subject=" +
+        subject +
+        "&body=" +
+        body;
+
+    }
+
+  </script>
+
+</body>
+</html>
